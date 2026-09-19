@@ -5,9 +5,9 @@ from app.database import get_db
 from app.models.landlord import Landlord
 from app.schemas.landlord import LandloardCreate,LandloardResponse,LandloardUpdate
 
-router= APIRouter(prefix="api/landlord",tags=["Landlord"])
+router= APIRouter(prefix="/api/landlord",tags=["Landlord"])
 
-@router.post("/",reponse_model=LandloardResponse,status_code=status.HTTP_201_CREATED)
+@router.post("/",response_model=LandloardResponse,status_code=status.HTTP_201_CREATED)
 def create_landlord(landlord:LandloardCreate,db:Session=Depends(get_db)):
 
     existing_landlord=db.query(Landloard).filter(Landloard.email==landlord.email).first()
@@ -28,7 +28,7 @@ def create_landlord(landlord:LandloardCreate,db:Session=Depends(get_db)):
     db.refresh(new_landlord)
     return new_landlord
 
-@router.get("/",refresh=List[LandloardResponse])
+@router.get("/",response_model=List[LandloardResponse])
 def get_all_landlord(db:Session=Depends(get_db)):
     return db.query(Landloard).all()
 

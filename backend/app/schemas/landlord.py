@@ -1,9 +1,9 @@
 from typing import Optional 
-from pydantic import BaseModel,Emailstr,ConfigDict
+from pydantic import BaseModel,EmailStr,ConfigDict
 
 class Landloard(BaseModel):
     landlord_name:str
-    email:Emailstr
+    email:EmailStr
     phone:Optional[str]=None
     address:Optional[str]=None
 

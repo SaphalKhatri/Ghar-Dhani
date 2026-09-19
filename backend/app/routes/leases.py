@@ -2,7 +2,7 @@ from fastapi import APIRouter,Depends,HTTPException,status
 from typing import List,Optional
 from sqlalchemy.orm import Session
 from app.database import get_db
-from app.models.leases import Lease
+from app.models.lease import Lease
 from app.models.flat import Flat
 from app.models.tenant import Tenant
 from app.schemas.lease import LeaseCreate,LeaseUpdate,LeaseResponse
@@ -42,14 +42,14 @@ def create_lease(lease:LeaseCreate,db:Session=Depends(get_db)):
     db.refresh(new_lease)
     return new_lease
 
-@router.get("/"response_model=List[LeaseResponse])
+@router.get("/",response_model=List[LeaseResponse])
 def get_all_leases(status_filter:Optional[str]=None,db:Session=Depends(get_db)):
     query=db.query(Lease)
     if status_filter:
         query=query.filter(Lease.status==status_filter).all()
     return query
 
-@router.put("/{lease_id}",response_model=LeaseResponse)\
+@router.put("/{lease_id}",response_model=LeaseResponse)
 def update_lease(lease_id:int, lease_update:LeaseUpdate,db:Session=Depends(get_db)):
 
     lease=db.query(Lease).filter(Lease.lease_id== lease_id).first()
