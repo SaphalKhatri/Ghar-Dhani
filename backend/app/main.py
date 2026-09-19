@@ -9,5 +9,12 @@ from app.models.tenant import Tenant
 
 from app.routes import landlord,flats,leases,payments,tenants
 
+Base.metadata.create_all(bind=engine)
+
 app=FastAPI(title="rental management",description="api for rental",version="1.0.0")
 
+app.include_router(landlord.router)
+app.include_router(flats.router)
+app.include_router(leases.router)
+app.include_router(payments.router)
+app.include_router(tenants.router)
