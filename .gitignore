@@ -20,3 +20,6 @@ docs_build
 site_build
 venv
 .env
+
+*.db
+mydatabase.db
